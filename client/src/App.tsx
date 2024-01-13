@@ -1,6 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Item, RankedList} from "./components/item";
+
+let basicItem: Item = {name: "Sydney", rank: 1}
+let basicItem2: Item = {name: "Ames", rank: 2}
+let lst = [basicItem, basicItem2]
 
 function App() {
   return (
@@ -18,6 +23,7 @@ function App() {
         >
           Learn React
         </a>
+      <RankedList items={lst} />
       </header>
     </div>
   );
