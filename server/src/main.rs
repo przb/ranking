@@ -10,16 +10,21 @@ mod callbacks;
 async fn main() -> tide::Result<()> {
     femme::start();
 
-    let repository = Arc::new(RwLock::new(Repository::new()));
 
-    let mut app = tide::with_state(repository);
+    let mut app = tide::new();
 
     app.with(
         tide::log::LogMiddleware::new()
     );
+    app.at("/api/v1").nest({
+        let repository = Arc::new(RwLock::new(Repository::new()));
 
-    app.at("/item").post(callbacks::add_item);
-    app.at("/items").get(callbacks::get_items);
+        let mut api = tide::with_state(repository);
+
+        api.at("/item").post(callbacks::add_item);
+        api.at("/items").get(callbacks::get_items);
+        api
+    });
     app.listen("127.0.0.1:8080").await?;
     Ok(())
 }

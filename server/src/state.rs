@@ -8,7 +8,7 @@ pub struct Repository {
 
 impl Repository {
     pub fn new() -> Self {
-        let items = vec![Item::new("Sydney", 1), Item::new("Ames", 2)];
+        let items = vec![Item::new("Sydney", 1, 0), Item::new("Ames", 2, 1)];
 
         Self { items }
     }

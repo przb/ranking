@@ -6,12 +6,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
-import fetchItems, {getItemsAsync} from './features/item/itemSlice'
+import fetchItems, {getItemsThunk} from './features/item/itemSlice'
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
-store.dispatch(getItemsAsync())
+store.dispatch(getItemsThunk())
 
 root.render(
   <React.StrictMode>

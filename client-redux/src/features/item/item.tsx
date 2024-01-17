@@ -1,26 +1,15 @@
-import {getItemsAsync, selectRanks} from "./itemSlice";
+import {getItemsThunk, itemsSlice, removeItem, selectRanks} from "./itemSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useState} from "react";
 import styles from '../counter/Counter.module.css';
 
 
-export {}
-
 export interface Item {
     name: string,
     rank: number,
+    id: number,
 }
 
-export function RankedItem({item}: { item: Item }) {
-    return (
-        <div>
-            <h1>Welcome to the ranks</h1>
-            <h1>Item:</h1>
-            <h2>Name: {item.name}</h2>
-            <h2>Rank: {item.rank}</h2>
-        </div>
-    )
-}
 
 function AddItem() {
     return (
@@ -31,32 +20,45 @@ function AddItem() {
     )
 }
 
+function RankedItem({item}: { item: Item }) {
+    const dispatch = useAppDispatch();
+    return (
+        <tr>
+            <td>{item.id}</td>
+            <td>{item.rank}</td>
+            <td>{item.name}</td>
+            <td>
+                <button
+                    className={styles.button}
+                    aria-label="Remove Item"
+                    onClick={() => dispatch(removeItem(item.id))}
+                >
+                    -
+                </button>
+            </td>
+        </tr>
+    )
+}
+
 export function RankedList() {
     let items = useAppSelector(selectRanks)
     let dispatch = useAppDispatch();
-
     const [newItems, setItems] = useState("[]");
 
     return (
         <div>
-            <button className={styles.button}
-                    // onClick={() => dispatch(getItemsAsync)}
-                    >
-                Load Ranks
-            </button>
-        <table className="table table-dark">
-            <tbody>
-            <tr>
-                <th>Rank</th>
-                <th>Item</th>
-            </tr>
-            {items.map(i => <tr>
-                <td>{i.rank}</td>
-                <td>{i.name}</td>
-            </tr>)}
-            <AddItem />
-            </tbody>
-        </table>
+            <table className="table table-dark">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Rank</th>
+                    <th>Item</th>
+                    <th>add/remove</th>
+                </tr>
+                {items.map(i => <RankedItem key={i.id} item={i}/>)}
+                <AddItem/>
+                </tbody>
+            </table>
         </div>
     )
 }
