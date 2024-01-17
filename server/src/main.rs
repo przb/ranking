@@ -19,7 +19,7 @@ async fn main() -> tide::Result<()> {
     );
 
     app.at("/item").post(callbacks::add_item);
-    app.at("/").get(callbacks::get_items);
+    app.at("/items").get(callbacks::get_items);
     app.listen("127.0.0.1:8080").await?;
     Ok(())
 }

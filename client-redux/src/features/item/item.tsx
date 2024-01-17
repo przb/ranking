@@ -1,3 +1,11 @@
+import {getItemsAsync, selectRanks} from "./itemSlice";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useState} from "react";
+import styles from '../counter/Counter.module.css';
+
+
+export {}
+
 export interface Item {
     name: string,
     rank: number,
@@ -23,9 +31,19 @@ function AddItem() {
     )
 }
 
-export function RankedList({items}: { items: Item[] }) {
-    items.sort((a, b) => a.rank - b.rank);
+export function RankedList() {
+    let items = useAppSelector(selectRanks)
+    let dispatch = useAppDispatch();
+
+    const [newItems, setItems] = useState("[]");
+
     return (
+        <div>
+            <button className={styles.button}
+                    // onClick={() => dispatch(getItemsAsync)}
+                    >
+                Load Ranks
+            </button>
         <table className="table table-dark">
             <tbody>
             <tr>
@@ -39,5 +57,6 @@ export function RankedList({items}: { items: Item[] }) {
             <AddItem />
             </tbody>
         </table>
+        </div>
     )
 }
