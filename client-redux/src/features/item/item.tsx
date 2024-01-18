@@ -1,4 +1,4 @@
-import {getItemsThunk, itemsSlice, removeItem, selectRanks} from "./itemSlice";
+import {getItemsThunk, itemsSlice, removeItem,addItem, selectRanks} from "./itemSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useState} from "react";
 import styles from '../counter/Counter.module.css';
@@ -12,13 +12,29 @@ export interface Item {
 
 
 function AddItem() {
+    const dispatch = useAppDispatch();
+
+    const input = useState()
+
+
     return (
         <tr>
+            <td></td>
             <td><input type={"number"}/></td>
             <td><input type={"text"}/></td>
+            <td>
+                <button
+                    className={styles.button}
+                    aria-label="Remove Item"
+                    onClick={() => dispatch(addItem)}
+                >
+                    +
+                </button>
+            </td>
         </tr>
     )
 }
+
 
 function RankedItem({item}: { item: Item }) {
     const dispatch = useAppDispatch();
