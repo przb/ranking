@@ -10,7 +10,7 @@ export const itemsReducer = (state, action) => {
             }
         case 'ADD_ITEM':
             return {
-                items: [action.payload, ...state.items]
+                items: [action.payload, ...state.items].sort((a,b) => a.rank - b.rank)
             }
         case "DELETE_ITEM":
             return {
