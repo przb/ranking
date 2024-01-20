@@ -35,22 +35,37 @@ const ItemForm = () => {
 
     return (
         <form className={"create"} onSubmit={handleSubmit}>
-            <h3>Add new Item</h3>
-            <label>Item Name: </label>
-            <input
-                type={"text"}
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-            />
-            <br />
-            <label>Item Rank: </label>
-            <input
-                type={"number"}
-                onChange={(e) => setRank(parseInt(e.target.value))}
-                value={rank}
-            />
-            <br />
-            <button>Add Item</button>
+            <legend>Add new Item</legend>
+            <div className={"mb-3"}>
+                <label
+                    for={"itemName"}
+                    className={"form-label"}>
+                    Item Name:
+                </label>
+                <input
+                    type={"text"}
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                    className={"form-control"}
+                    id={"itemName"}
+                />
+            </div>
+
+            <div className={"mb-3"}>
+                <label
+                    for={"itemRank"}
+                    className={"form-label"}>
+                    Item Rank:
+                </label>
+                <input
+                    type={"number"}
+                    onChange={(e) => setRank(parseInt(e.target.value))}
+                    value={rank}
+                    className={"form-control"}
+                    id={"itemRank"}
+                />
+            </div>
+            <button type={"submit"} className={"btn btn-primary"}>Add Item</button>
         </form>
     )
 }

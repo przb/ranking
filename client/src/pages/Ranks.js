@@ -16,19 +16,21 @@ const Ranks = () => {
         fetchItems()
     }, []);
 
-    return (<table className={"items"}>
-            <tbody>
-            <tr>
-                <th>Rank</th>
-                <th>Item</th>
-            </tr>
+    return (<table className={"table table-striped table-bordered"}>
+        <thead>
+        <tr>
+            <th scope={"col"}>Rank</th>
+            <th scope={"col"}>Item</th>
+        </tr>
+        </thead>
 
-            {items && items.map((i) => {
-                return (<ItemDetails item={i} key={i.id}/>)
-            })}
+        <tbody>
+        {items && items.map((i) => {
+            return (<ItemDetails item={i} key={i.id}/>)
+        })}
 
-            </tbody>
-        </table>)
+        </tbody>
+    </table>)
 
 }
 
