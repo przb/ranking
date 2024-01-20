@@ -41,7 +41,7 @@ const ItemForm = () => {
             <legend>Add new Item</legend>
             <div className={"mb-3"}>
                 <label
-                    for={"itemName"}
+                    htmlFor={"itemName"}
                     className={"form-label"}>
                     Item Name:
                 </label>
@@ -56,7 +56,7 @@ const ItemForm = () => {
 
             <div className={"mb-3"}>
                 <label
-                    for={"itemRank"}
+                    htmlFor={"itemRank"}
                     className={"form-label"}>
                     Item Rank:
                 </label>

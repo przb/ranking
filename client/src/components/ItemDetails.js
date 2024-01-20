@@ -1,4 +1,7 @@
+import {useItemsContext} from "../hooks/useItemsContext";
+
 const ItemDetails = ({item}) => {
+    let {dispatch} = useItemsContext()
     const handleClick = async (e) => {
         const id = item.id;
 
@@ -9,6 +12,10 @@ const ItemDetails = ({item}) => {
                 "Content-Type": "application/json"
             }
         })
+        
+        if (response.ok) {
+            dispatch({type: "DELETE_ITEM", payload: id});
+        }
     }
 
     return (<tr>
