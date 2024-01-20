@@ -21,6 +21,7 @@ const Ranks = () => {
         <tr>
             <th scope={"col"}>Rank</th>
             <th scope={"col"}>Item</th>
+            <th scope={"col"}></th>
         </tr>
         </thead>
 

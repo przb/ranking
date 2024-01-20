@@ -21,7 +21,9 @@ async fn main() -> tide::Result<()> {
 
         let mut api = tide::with_state(repository);
 
-        api.at("/item").post(callbacks::add_item);
+        api.at("/item")
+            .post(callbacks::add_item)
+            .delete(callbacks::delete_item);
         api.at("/items").get(callbacks::get_items);
         api
     });

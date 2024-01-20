@@ -1,6 +1,6 @@
 use tide::http::mime;
-use tide::Request;
-use crate::item::{Item, ItemAddedResponse, NewItem};
+use tide::{Request};
+use crate::item::{Item, ItemId, NewItem};
 use crate::state::State;
 
 pub async fn add_item(mut req: Request<State>) -> tide::Result {
@@ -11,7 +11,7 @@ pub async fn add_item(mut req: Request<State>) -> tide::Result {
 
     let next_id = repo.next_id;
     let item = Item::from(new_item, next_id);
-    let item_response_body = ItemAddedResponse::new(next_id);
+    let item_response_body = ItemId::new(next_id);
 
     repo.next_id += 1;
 
@@ -28,9 +28,23 @@ pub async fn add_item(mut req: Request<State>) -> tide::Result {
         .build();
     Ok(res)
 }
+pub async fn delete_item(mut req: Request<State>) -> tide::Result {
+    let item_id: ItemId = req.body_json().await?;
+
+    let state = req.state();
+    let mut repo = state.write().await;
+
+    // TODO for now this works since the client will only ever send valid requests,
+    // but some error handling would be nice
+    let index = repo.items.iter().position(|i| i.id == item_id.id).unwrap();
+    repo.items.remove(index);
+
+    Ok(tide::Response::new(tide::StatusCode::Ok))
+}
 
 pub async fn get_items(req: Request<State>) -> tide::Result<tide::Body> {
     let state = req.state();
     let repo = state.read().await;
     tide::Body::from_json(&repo.items)
 }
+

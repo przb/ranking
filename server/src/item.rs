@@ -26,6 +26,7 @@ pub struct NewItem {
     pub rank: i32,
 }
 
+#[allow(dead_code)]
 impl NewItem {
     pub fn new(name: &str, rank: i32) -> Self {
         Self { name: name.into(), rank }
@@ -33,12 +34,13 @@ impl NewItem {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ItemAddedResponse {
+pub struct ItemId {
     pub id: i32,
 }
 
-impl ItemAddedResponse {
+impl ItemId {
     pub fn new(id: i32) -> Self {
         Self { id }
     }
 }
+
