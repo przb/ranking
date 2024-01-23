@@ -1,18 +1,19 @@
 import {createContext, useReducer} from "react";
+import {ADD_ITEM, DELETE_ITEM, SET_ITEM} from "../actions/ItemActions";
 
 export const ItemContext = createContext()
 
 export const itemsReducer = (state, action) => {
     switch(action.type) {
-        case 'SET_ITEMS':
+        case SET_ITEM:
             return {
                 items: action.payload
             }
-        case 'ADD_ITEM':
+        case ADD_ITEM:
             return {
                 items: [action.payload, ...state.items].sort((a,b) => a.rank - b.rank)
             }
-        case "DELETE_ITEM":
+        case DELETE_ITEM:
             return {
                 items: state.items.filter(i => i.id !== action.payload)
             }
