@@ -1,5 +1,8 @@
 use std::sync::Arc;
 use async_std::sync::RwLock;
+use itertools::{all, Itertools};
+use tide::http::headers::HeaderValue;
+use tide::security::{CorsMiddleware, Origin};
 use state::Repository;
 
 mod item;
@@ -10,8 +13,24 @@ mod callbacks;
 async fn main() -> tide::Result<()> {
     femme::start();
 
+    let methods = vec!["http", "https"];
+    let destinations = vec!["localhost", "ranking-server", "ranking-client"];
+    let ports = vec!["8080", "3000"];
+    let all_origins = methods.into_iter()
+        .cartesian_product(destinations)
+        .cartesian_product(ports)
+        .map(|((method, host), port)| format!("{method}://{host}:{port}"))
+        .collect_vec();
+
+    let cors = CorsMiddleware::new()
+        // .allow_credentials(false)
+        .allow_methods("*".parse::<HeaderValue>().unwrap())
+        // .allow_origin(Origin::from("*"));
+        .allow_origin(Origin::from(all_origins));
+
 
     let mut app = tide::new();
+    app.with(cors);
 
     app.with(
         tide::log::LogMiddleware::new()
