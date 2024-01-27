@@ -1,33 +1,33 @@
 version: "3.8"
 
 services:
-        server:
-                container_name: ranking-server
-                restart: unless-stopped
-                image: ranking-server-prod:0.1.0
-                build: 
-                        context: server
-                        dockerfile: Dockerfile
-                        target: server
-                ports: 
-                        - 8080:8080
-                networks: 
-                        - shared-network
+  server:
+    container_name: ranking-server
+    restart: unless-stopped
+    image: ranking-server-prod:0.1.0
+    build:
+      context: server
+      dockerfile: Dockerfile
+      target: server
+    ports:
+      - 8080:8080
+    networks:
+      - shared-network
 
-        client:
-                container_name: ranking-client
-                restart: unless-stopped
-                image: ranking-client-prod:0.1.0
-                build: 
-                        context: client
-                        dockerfile: Dockerfile
-                        target: client
-                ports: 
-                        - 3000:3000
-                networks: 
-                        - shared-network
-                depends_on:
-                        - server
+  client:
+    container_name: ranking-client
+    restart: unless-stopped
+    image: ranking-client-prod:0.1.0
+    build:
+      context: client
+      dockerfile: Dockerfile
+      target: client
+    ports:
+      - 3000:3000
+    networks:
+      - shared-network
+    depends_on:
+      - server
 
 networks:
-        shared-network:
+  shared-network:
