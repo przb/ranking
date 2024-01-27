@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useItemsContext} from "../hooks/useItemsContext";
 import {ADD_ITEM} from "../actions/ItemActions";
-import serverConfig from "../config.json";
+import {webCall} from "../webc"
 
 const ItemForm = () => {
     const {dispatch} = useItemsContext()
@@ -13,20 +13,12 @@ const ItemForm = () => {
         e.preventDefault()
 
         const item = {rank, name}
-        const url = `http://${serverConfig.serverAddress}:${serverConfig.serverPort}/api/v1/item`;
+        const url = `/api/v1/item`;
         console.log("making POST request to ", url)
-
-        const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(item),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-        const json = await response.json();
+        const json = await webCall("POST", url, item);
         console.log("response: ", json)
-
+        const response = json;
+        console.log(json);
         if (!response.ok) {
             setError(response.error)
         } else if (response.rejected) {

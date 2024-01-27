@@ -1,22 +1,16 @@
 import {useItemsContext} from "../hooks/useItemsContext";
-import serverConfig from "../config.json"
 import {DELETE_ITEM} from "../actions/ItemActions";
+import {webCall} from "../webc"
 
 const ItemDetails = ({item}) => {
     let {dispatch} = useItemsContext()
     const handleClick = async (e) => {
         const id = item.id;
 
-        const url = `http://${serverConfig.serverAddress}:${serverConfig.serverPort}/api/v1/item`;
+        const url = `/api/v1/item`;
         console.log("making DELETE request to ", url)
 
-        const response = await fetch(url, {
-            method: "DELETE",
-            body: JSON.stringify({ id }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
+        const response = await webCall("DELETE", url,{ id });
 
         if (response.ok) {
             dispatch({type: DELETE_ITEM, payload: id});

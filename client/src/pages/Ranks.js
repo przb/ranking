@@ -1,6 +1,8 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import ItemDetails from "../components/ItemDetails";
 import {useItemsContext} from "../hooks/useItemsContext";
+import {webCall} from "../webc"
+import {SET_ITEM} from "../actions/ItemActions";
 
 const Ranks = () => {
     // const [items, setItems] = useState(null)
@@ -8,12 +10,11 @@ const Ranks = () => {
 
     useEffect(() => {
         const fetchItems = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/items')
+            const response = await webCall("GET", `/api/v1/items`);
             const json = await response.json();
             if (response.ok) {
-                dispatch({type: "SET_ITEMS", payload: json})
+                dispatch({type: SET_ITEM, payload: json})
             }
-
         }
         fetchItems()
     }, []);
