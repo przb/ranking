@@ -1,7 +1,7 @@
 
 
 export async function webCall(httpMethod, path, data?) {
-    const url = `${path}`;
+    const url = `http://localhost:8080${path}`;
 
     const response = await fetch(url, {
         method: httpMethod,
